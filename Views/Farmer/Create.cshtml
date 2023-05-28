@@ -1,0 +1,118 @@
+﻿@model AgriLogic.Models.Farmer
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+    <link rel="stylesheet" href="~/css/site.css" /> <!-- Reference the site.css file -->
+    <style>
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-back-to-list {
+            background-color: white;
+            border: 3px solid #59981A;
+            color: #59981A;
+            border-radius: 20px;
+            margin-right: 10px;
+            flex: 1;
+        }
+
+            .btn-back-to-list:hover {
+                background-color: #3d5c1e;
+                border-color: #3d5c1e;
+                color: white;
+            }
+
+        .btn-submit {
+            flex: 1;
+            background-color: #59981A;
+            border: 3px solid #59981A;
+            color: #fff;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+
+            .btn-submit:hover {
+                background-color: #3d5c1e;
+                border-color: #3d5c1e;
+                color: white;
+            }
+    </style>
+</head>
+<body>
+    <div class="login d-flex align-items-center py-5">
+        <div class="container">
+            <div class="login-heading">
+                <h3>Add A Product</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-9 col-lg-8 mx-auto">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <!-- Display the current maximum ID value -->
+                        <div class="form-group">
+                            <label asp-for="ID" class="control-label"></label>
+                            <input asp-for="ID" class="form-control" value="@GetNextId()" readonly />
+                            <span asp-validation-for="ID" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Username" class="control-label"></label>
+                            <input asp-for="Username" class="form-control" readonly />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" readonly />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" readonly />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Surname" class="control-label"></label>
+                            <input asp-for="Surname" class="form-control" readonly />
+                            <span asp-validation-for="Surname" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Product" class="control-label"></label>
+                            <input asp-for="Product" class="form-control" />
+                            <span asp-validation-for="Product" class="text-danger"></span>
+                        </div>
+
+                        <div class="btn-container">
+                            <a asp-action="Index" class="btn btn-back-to-list">Back to List</a>
+                            <input type="submit" value="Submit" class="btn btn-primary btn-login text-capitalize font-weight-bold rounded-pill btn-submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @functions {
+        // Helper function to get the next available ID
+        public int GetNextId()
+        {
+            // TODO: Implement the logic to retrieve the maximum ID from the database
+            // and increment it by 1.
+            int currentMaxId = 100;
+            int nextId = currentMaxId + 1;
+            return nextId;
+        }
+    }
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        /* Styling for the search bar and create new button */
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            margin-right: 10px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 2px solid #ced4da;
+            width: 100%;
+        }
+
+        .table-container {
+            max-height: 550px; /* Adjust the height as needed */
+            overflow-y: auto;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+
+        .search-button {
+            background-color: white;
+            border-color: #59981A;
+            color: #59981A;
+            border-radius: 20px;
+            flex: 1;
+        }
+
+        .create-button {
+            padding: 6px 12px;
+            border-radius: 20px;
+            background-color: #59981A;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+            .search-button:hover,
+            .create-button:hover {
+                background-color: #3d5c1e;
+                color: #fff;
+                text-decoration: none;
+            }
+
+        .refresh-button {
+            padding: 6px 12px;
+            border-radius: 20px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+            .refresh-button:hover {
+                background-color: #d32f2f;
+            }
+
+        /* CSS to align "Create New" button to the right */
+        .create-button-container {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="login-heading">Your Farmer List</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 search-bar">
+                <input type="text" id="searchString" name="searchString" class="search-input" placeholder="Search" onkeyup="searchFarmers()">
+            </div>
+            <div class="col-md-6 create-button-container">
+                <div>
+                    <a asp-action="Create" class="btn btn-primary btn-block btn-login text-capitalize font-weight-bold mb-2 rounded-pill create-button">Add Farmer</a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Product</th>
+                        </tr>
+                    </thead>
+                    <tbody id="farmersTable">
+                        @foreach (var farmer in Model)
+                        {
+                            <tr>
+                                <td>@farmer.Username</td>
+                                <td>@farmer.Password</td>
+                                <td>@farmer.Name</td>
+                                <td>@farmer.Surname</td>
+                                <td>@farmer.Product</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function searchFarmers() {
+            var searchString = document.getElementById("searchString").value;
+            var rows = document.querySelectorAll("#farmersTable tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var farmer = rows[i].textContent || rows[i].innerText;
+                if (farmer.toLowerCase().indexOf(searchString.toLowerCase()) > -1) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+﻿@model AgriLogic.Models.LoginModel
+
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+        <div class="col-md-8 col-lg-6">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-lg-8 mx-auto">
+                            <h3 class="login-heading mb-4">AgriLogic</h3>
+                            <br>
+                            <form id="loginForm" asp-controller="Login" asp-action="Index" method="post">
+                                <p class="centered-text">Are you a:</p>
+                                <div class="radiobtnclass">
+                                    <div class="emailme_choice">
+                                        <input type="radio" class="switch-input" name="Role" id="choice_tome" value="Farmer" checked>
+                                        <label for="choice_tome" class="switch-label switch-label-tome">Farmer</label>
+                                        <input type="radio" class="switch-input" name="Role" value="Employee" id="choice_tofrd">
+                                        <label for="choice_tofrd" class="switch-label switch-label-tofrd">Employee</label>
+                                        <span class="selection-indicator"></span>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <input type="text" id="inputUsername" class="form-control" placeholder="Enter Username" required autofocus name="Username">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="inputPassword" class="form-control" placeholder="Enter Password" required name="Password">
+                                </div>
+                                <br>
+                                <button id="signinButton" class="btn btn-lg btn-primary btn-block btn-login text-capitalize font-weight-bold mb-2 rounded-pill" type="button">Sign in</button>
+                                <div class="text-center">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Handle form submission with AJAX -->
+<script>
+    $(function () {
+        $('#signinButton').click(function () {
+            // Get the form data
+            var formData = {
+                Role: $('input[name="Role"]:checked').val(),
+                Username: $('#inputUsername').val(),
+                Password: $('#inputPassword').val()
+            };
+
+            // Send the form data using AJAX
+            $.ajax({
+                url: $('#loginForm').attr('action'),
+                type: $('#loginForm').attr('method'),
+                data: formData,
+                success: function (response) {
+                    // Check if the response contains an error message
+                    if (response.errorMessage) {
+                        // Display the error message as a popup
+                        alert(response.errorMessage);
+                    } else {
+                        // Redirect to the appropriate page based on the user role
+                        if (response.role === 'Farmer') {
+                            window.location.href = '/Farmer';
+                        } else if (response.role === 'Employee') {
+                            window.location.href = '/Employee';
+                        }
+                    }
+                },
+                error: function () {
+                    // Handle any errors that occur during the AJAX request
+                    alert('An error occurred while processing your request.');
+                }
+            });
+        });
+    });
+</script>

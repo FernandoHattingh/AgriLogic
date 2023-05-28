@@ -1,0 +1,127 @@
+﻿@model IEnumerable<AgriLogic.Models.Farmer>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        /* Styling for the search bar and create new button */
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+
+        .table-container {
+            max-height: 550px; /* Adjust the height as needed */
+            overflow-y: auto;
+        }
+        .search-input {
+            flex: 1;
+            margin-right: 10px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 2px solid #ced4da;
+            width: 100%;
+        }
+
+        .create-button {
+            padding: 6px 12px;
+            border-radius: 20px;
+            background-color: #59981A;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+            .search-button:hover,
+            .create-button:hover {
+                background-color: #3d5c1e;
+                color: #fff;
+                text-decoration: none;
+            }
+
+        /* CSS to align "Create New" button to the right */
+        .create-button-container {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="login-heading">Your Product List</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 search-bar">
+                <input type="text" id="searchString" name="searchString" class="search-input" placeholder="Search" oninput="searchFarmers()">
+            </div>
+            <div class="col-md-6 create-button-container">
+                <div>
+                    <a asp-action="Create" class="btn btn-primary btn-block btn-login text-capitalize font-weight-bold mb-2 rounded-pill create-button">Add Product</a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12  table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Product</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Surname</td>
+                                    <td>@item.Product</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4">No data available.</td> <!-- Adjust colspan to match the number of table columns -->
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function searchFarmers() {
+            var searchString = document.getElementById("searchString").value;
+            var rows = document.querySelectorAll(".table tbody tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var farmer = rows[i].textContent || rows[i].innerText;
+                if (farmer.toLowerCase().indexOf(searchString.toLowerCase()) > -1) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

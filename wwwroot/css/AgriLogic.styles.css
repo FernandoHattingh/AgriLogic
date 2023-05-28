@@ -1,0 +1,13 @@
+﻿.btn-rounded {
+    border-radius: 20px;
+}
+
+.btn-sign-out {
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.btn-sign-in {
+    color: #fff;
+    background-color: #59981A;
+}

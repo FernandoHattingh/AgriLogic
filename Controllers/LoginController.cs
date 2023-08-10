@@ -32,7 +32,7 @@ namespace AgriLogic.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(LoginModel model)
         {
-            string con = "Server=tcp:fernandosr.database.windows.net,1433; Initial Catalog=AgriLogic; Authentication=Active Directory Password; User ID=ST10115510@vcconnect.edu.za; Password=Fromlive53;";
+            string con = "";
 
             using (SqlConnection connection = new SqlConnection(con))
             {
